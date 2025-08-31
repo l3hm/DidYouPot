@@ -1,0 +1,15 @@
+{
+  "Author": "Lain",
+  "Name": "DidYouPot",
+  "Punchline": "Shows the reason why you might not make the damage check.",
+  "Description": "Simple tracker for pot usage, deaths and debuffs per fight. Use /didyoupot to open the menu.",
+  "ApplicableVersion": "any",
+  "RepoUrl": "https://github.com/l3hm/DidYouPot",
+  "IconUrl": "..\Data\pot.png",
+  "Tags": [
+    "combat",
+    "plugin",
+    "pot"
+  ]
+  "InternalName": "DidYouPot",
+}

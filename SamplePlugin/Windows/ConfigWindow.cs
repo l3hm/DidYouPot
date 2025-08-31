@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Interface.Windowing;
 
-namespace SamplePlugin.Windows;
+namespace DidYouPot.Windows;
 
 public class ConfigWindow : Window, IDisposable
 {
@@ -12,12 +12,12 @@ public class ConfigWindow : Window, IDisposable
     // We give this window a constant ID using ###.
     // This allows for labels to be dynamic, like "{FPS Counter}fps###XYZ counter window",
     // and the window ID will always be "###XYZ counter window" for ImGui
-    public ConfigWindow(Plugin plugin) : base("A Wonderful Configuration Window###With a constant ID")
+    public ConfigWindow(Plugin plugin) : base("Configuration###")
     {
-        Flags = ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar |
+        Flags = ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar |
                 ImGuiWindowFlags.NoScrollWithMouse;
 
-        Size = new Vector2(232, 90);
+        Size = new Vector2(200, 200);
         SizeCondition = ImGuiCond.Always;
 
         Configuration = plugin.Configuration;
@@ -40,19 +40,41 @@ public class ConfigWindow : Window, IDisposable
 
     public override void Draw()
     {
-        // Can't ref a property, so use a local copy
-        var configValue = Configuration.SomePropertyToBeSavedAndWithADefault;
-        if (ImGui.Checkbox("Random Config Bool", ref configValue))
-        {
-            Configuration.SomePropertyToBeSavedAndWithADefault = configValue;
-            // Can save immediately on change if you don't want to provide a "Save and Close" button
-            Configuration.Save();
-        }
-
         var movable = Configuration.IsConfigWindowMovable;
         if (ImGui.Checkbox("Movable Config Window", ref movable))
         {
             Configuration.IsConfigWindowMovable = movable;
+            Configuration.Save();
+        }
+
+        ImGui.Separator();
+        ImGui.Text("Main Window Options:");
+
+        var noMove = Configuration.MainWindowNoMove;
+        if (ImGui.Checkbox("No Move", ref noMove))
+        {
+            Configuration.MainWindowNoMove = noMove;
+            Configuration.Save();
+        }
+
+        var noResize = Configuration.MainWindowNoResize;
+        if (ImGui.Checkbox("No Resize", ref noResize))
+        {
+            Configuration.MainWindowNoResize = noResize;
+            Configuration.Save();
+        }
+
+        var noCollapse = Configuration.MainWindowNoCollapse;
+        if (ImGui.Checkbox("No Collapse", ref noCollapse))
+        {
+            Configuration.MainWindowNoCollapse = noCollapse;
+            Configuration.Save();
+        }
+
+        var noDocking = Configuration.MainWindowNoDocking;
+        if (ImGui.Checkbox("No Docking", ref noDocking))
+        {
+            Configuration.MainWindowNoDocking = noDocking;
             Configuration.Save();
         }
     }
